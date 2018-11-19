@@ -1,14 +1,12 @@
 package com.example.yoavbear.homey;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,43 +14,21 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditClickListener, MyAdapter.OnDeleteClickListener {
-
-    private Chore.FamilyMember creator;
+public class ChoreCreator extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        creator = Chore.FamilyMember.Yoav;
-
+        setContentView(R.layout.activity_chore_creator);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Intent i = getIntent();
+        String creator = i.getStringExtra("user");
+        TextView creatorText = (TextView)findViewById(R.id.creator_text);
+        creatorText.setText(creator);
         initCatSpinner();
         initNamesSpinner();
         initPrioritySpinner();
-
-        RecyclerView choresRecyclerView = (RecyclerView)findViewById(R.id.chores_rView);
-
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        choresRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        ArrayList<Chore> choresList = new ArrayList<>();
-
-        Chore first_chore = new Chore(Chore.FamilyMember.Yoav, Chore.FamilyMember.Yotam, Chore.Category.General, "First chore", "very important");
-        choresList.add(first_chore);
-        MyAdapter mAdapter = new MyAdapter(this, choresList);
-        choresRecyclerView.setAdapter(mAdapter);
-
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ChoreCreator.class);
-                i.putExtra("user", creator.toString());
-                startActivity(i);
-            }
-        });
-
     }
 
     public void initPrioritySpinner(){
@@ -80,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
     }
 
     public void initNamesSpinner(){
-        Spinner namesSpinner = (Spinner) findViewById(R.id.names_spinner);
+        Spinner namesSpinner = (Spinner) findViewById(R.id.assignees_spinner);
 
         // Spinner Drop down elements
         List<String> names = new ArrayList<String>();
@@ -102,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
     }
 
     public void initCatSpinner(){
-        Spinner namesSpinner = (Spinner) findViewById(R.id.types_spinner);
+        Spinner namesSpinner = (Spinner) findViewById(R.id.categories_spinner);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
@@ -124,16 +100,4 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         namesSpinner.setAdapter(dataAdapter);
     }
 
-
-    @Override
-    public void onEditClick(Chore chore) {
-            String b = "bla bla";
-    }
-
-    @Override
-    public void onDeleteClick(Chore chore) {
-        String b = "bla bla";
-
-    }
 }
-
