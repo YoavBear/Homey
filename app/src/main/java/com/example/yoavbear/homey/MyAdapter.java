@@ -1,6 +1,7 @@
 package com.example.yoavbear.homey;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -17,8 +22,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ArrayList<Chore> data;
     private OnEditClickListener onEditClickListener;
     private OnDeleteClickListener onDeleteClickListener;
-
-
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public interface OnEditClickListener {
         void onEditClick(Chore chore);
@@ -58,23 +62,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.editChoreBtn.setText("EDIT CHORE");
             holder.deleteChoreBtn.setText("DELETE CHORE");
 
-            holder.editChoreBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.title.setText("join button pressed");
-
-                }
-            });
             holder.deleteChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onDeleteClickListener.onDeleteClick(current);
+                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(current.getCreator().toString());
+                    dRaffChores.child(current.getTitle()).removeValue();
+                    Toast.makeText(v.getContext(), "The chore was successfully removed", Toast.LENGTH_LONG).show();
                 }
             });
+
             holder.editChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onEditClickListener.onEditClick(current);
+                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(current.getCreator().toString());
+////////////////////////////////////////////////////BUG////////////////////////////////////////////////////////////////
+                    Toast.makeText(v.getContext(), "Not working yet", Toast.LENGTH_LONG).show();
+                    //problem with ChoreUpdater class
+//                    Intent i = new Intent(v.getContext(), ChoreUpdater.class);
+//                    i.putExtra("user", current.getCreator().toString());
+//                    v.getContext().startActivity(i);
                 }
             });
 

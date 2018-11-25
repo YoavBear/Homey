@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.google.firebase.database.ChildEventListener;
@@ -23,6 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditClickListener, MyAdapter.OnDeleteClickListener {
 
     private Chore.FamilyMember creator;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private ArrayList<Chore> choresList = new ArrayList<>();
     private MyAdapter mAdapter;
 
@@ -127,18 +129,25 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
     @Override
     public void onEditClick(Chore chore) {
-        String b = "bla bla";
+
     }
 
     @Override
     public void onDeleteClick(Chore chore) {
-        String b = "bla bla";
+        Button deleteChoreBtn;
+        DatabaseReference dRaffChores = database.getReference().child("Chores").child(chore.getCreator().name());
+        deleteChoreBtn = (Button) findViewById(R.id.choreButton_delete);
+        deleteChoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
     public void handleChoresList(final Chore.FamilyMember creator) {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator.name());
 
         dRaffChores.addChildEventListener(new ChildEventListener() {
@@ -161,7 +170,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
                 ChorePost post = dataSnapshot.getValue(ChorePost.class);
                 Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
                 index = choresList.indexOf(temp);
- //               Toast.makeText(getApplicationContext(), index, Toast.LENGTH_LONG).show();
                 if(index >= 0 && index < choresList.size()) {
                     choresList.remove(index);
                     mAdapter.notifyItemRemoved(index);
