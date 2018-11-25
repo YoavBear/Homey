@@ -3,8 +3,8 @@ package com.example.yoavbear.homey;
 public class Chore {
 
     public enum FamilyMember {Users, Aviad, Vlad_B, Vlad_M, Yoav, Yotam}
-    public enum Category {Category, General,Laundry, Cleaning, Dishes, Shopping, Errands}
-    public enum Priority {Priority, Urgent, Highest, High, Medium, Low, Lowest}
+    public enum Category {Category, General, Laundry, Cleaning, Dishes, Shopping, Errands}
+    public enum Priority {Priority, Urgent, High, Medium, Low}
 
     private FamilyMember creator;
     private FamilyMember assignee;

@@ -41,9 +41,16 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         choresRecyclerView.setLayoutManager(mLayoutManager);
 
+        // --->>> logical bug somewhere!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
         getAllChores(creator);
+
+        // hard coded chore
+        Chore first_chore = new Chore(Chore.FamilyMember.Yoav, Chore.FamilyMember.Yotam, Chore.Category.General, "First chore", "very important", Chore.Priority.Urgent);
+        choresList.add(first_chore);
+
         MyAdapter mAdapter = new MyAdapter(this, choresList);
         choresRecyclerView.setAdapter(mAdapter);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,12 +71,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         List<String> priorities = new ArrayList<String>();
         priorities.add("Priority");
         priorities.add("Urgent");
-        priorities.add("Highest");
         priorities.add("High");
         priorities.add("Medium");
         priorities.add("Low");
-        priorities.add("Very Low");
-
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, priorities);
@@ -88,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         List<String> names = new ArrayList<String>();
         names.add("Users");
         names.add("Aviad");
-        names.add("Vlad B");
-        names.add("Vlad M");
+        names.add("Vlad_B");
+        names.add("Vlad_M");
         names.add("Yoav");
         names.add("Yotam");
 
@@ -143,13 +147,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator.name());
 
-
         dRaffChores.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                ChorePost post = dataSnapshot.getValue(ChorePost.class);
-//                Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
-//                choresList.add(temp);
+                ChorePost post = dataSnapshot.getValue(ChorePost.class);
+                Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
+                choresList.add(temp);
             }
 
             @Override
@@ -172,9 +175,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
             }
         });
-
-        Chore first_chore = new Chore(Chore.FamilyMember.Yoav, Chore.FamilyMember.Yotam, Chore.Category.General, "First chore", "very important", Chore.Priority.Urgent);
-        choresList.add(first_chore);
     }
 
     public static class ChorePost {

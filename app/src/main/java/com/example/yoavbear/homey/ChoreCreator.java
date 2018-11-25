@@ -47,12 +47,9 @@ public class ChoreCreator extends AppCompatActivity {
         List<String> priorities = new ArrayList<String>();
         priorities.add("Priority");
         priorities.add("Urgent");
-        priorities.add("Highest");
         priorities.add("High");
         priorities.add("Medium");
         priorities.add("Low");
-        priorities.add("Lowest");
-
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, priorities);
@@ -71,8 +68,8 @@ public class ChoreCreator extends AppCompatActivity {
         List<String> names = new ArrayList<String>();
         names.add("Users");
         names.add("Aviad");
-        names.add("Vlad B");
-        names.add("Vlad M");
+        names.add("Vlad_B");
+        names.add("Vlad_M");
         names.add("Yoav");
         names.add("Yotam");
 
@@ -137,7 +134,7 @@ public class ChoreCreator extends AppCompatActivity {
 
                 } else if (choreTitle.isEmpty()) {
                     assigneeSpinner.setBackgroundColor(Color.WHITE);
-                    Toast.makeText(getApplicationContext(), "Please give the chore a title", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter a chore title", Toast.LENGTH_LONG).show();
                     choreTitleText.setBackgroundColor(Color.RED);
 
                 } else {
