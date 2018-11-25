@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -16,6 +17,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ArrayList<Chore> data;
     private OnEditClickListener onEditClickListener;
     private OnDeleteClickListener onDeleteClickListener;
+
 
 
     public interface OnEditClickListener {
@@ -53,21 +55,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.assignee.setText("Assignee: "+current.getAssignee().toString());
             holder.category.setText("Category: "+current.getCategory());
             holder.priority.setText("Priority: "+current.getPriority().toString());
-            holder.joinBtn.setText("EDIT EVENT");
-            holder.moreFromCreatorBtn.setText("DELETE EVENT");
-            holder.joinBtn.setOnClickListener(new View.OnClickListener() {
+            holder.editChoreBtn.setText("EDIT EVENT");
+            holder.deleteChoreBtn.setText("DELETE EVENT");
+
+            holder.editChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     holder.title.setText("join button pressed");
+
                 }
             });
-            holder.moreFromCreatorBtn.setOnClickListener(new View.OnClickListener() {
+            holder.deleteChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onDeleteClickListener.onDeleteClick(current);
                 }
             });
-            holder.joinBtn.setOnClickListener(new View.OnClickListener() {
+            holder.editChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onEditClickListener.onEditClick(current);
@@ -95,8 +99,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView creator;
         public TextView priority;
 
-        public Button joinBtn;
-        public Button moreFromCreatorBtn;
+        public Button editChoreBtn;
+        public Button deleteChoreBtn;
 
 
         public MyViewHolder(View v) {
@@ -108,8 +112,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             category = v.findViewById(R.id.eventRow_category);
             priority = v.findViewById(R.id.eventRow_priority);
 
-            joinBtn = v.findViewById(R.id.eventRow_join);
-            moreFromCreatorBtn = v.findViewById(R.id.eventRow_more);
+            editChoreBtn = v.findViewById(R.id.choreButton_edit);
+
+            deleteChoreBtn = v.findViewById(R.id.choreButton_delete);
+
         }
     }
 }

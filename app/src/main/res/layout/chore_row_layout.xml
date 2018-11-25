@@ -67,17 +67,17 @@
         >
 
         <Button
-            android:id="@+id/eventRow_join"
+            android:id="@+id/choreButton_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/join_event"
+            android:text="Edit Event"
             android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/eventRow_more"
+            android:id="@+id/choreButton_delete"
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:text="More From Creator"
+            android:text="Delete Chore"
             android:layout_weight="1"/>
 
     </LinearLayout>

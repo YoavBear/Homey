@@ -2,6 +2,13 @@ package com.example.yoavbear.homey;
 
 public class Chore {
 
+    @Override
+    public boolean equals(Object o) {
+        if ((this.getCreator().equals(((Chore)o).getCreator())) && (this.getTitle().equals(((Chore)o).getTitle())))
+        return true;
+        else return false;
+    }
+
     public enum FamilyMember {Users, Aviad, Vlad_B, Vlad_M, Yoav, Yotam}
     public enum Category {Category, General, Laundry, Cleaning, Dishes, Shopping, Errands}
     public enum Priority {Priority, Urgent, High, Medium, Low}

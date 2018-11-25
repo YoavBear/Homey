@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
     private Chore.FamilyMember creator;
     private ArrayList<Chore> choresList = new ArrayList<>();
+    private MyAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +36,15 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         initCatSpinner();
         initNamesSpinner();
         initPrioritySpinner();
+        handleChoresList(creator);
 
         RecyclerView choresRecyclerView = (RecyclerView) findViewById(R.id.chores_rView);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         choresRecyclerView.setLayoutManager(mLayoutManager);
 
-        // --->>> logical bug somewhere!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-        getAllChores(creator);
-
-        // hard coded chore
-        Chore first_chore = new Chore(Chore.FamilyMember.Yoav, Chore.FamilyMember.Yotam, Chore.Category.General, "First chore", "very important", Chore.Priority.Urgent);
-        choresList.add(first_chore);
-
-        MyAdapter mAdapter = new MyAdapter(this, choresList);
+        mAdapter = new MyAdapter(this, choresList);
         choresRecyclerView.setAdapter(mAdapter);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
     }
 
-    public void getAllChores(final Chore.FamilyMember creator) {
+    public void handleChoresList(final Chore.FamilyMember creator) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator.name());
@@ -153,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
                 ChorePost post = dataSnapshot.getValue(ChorePost.class);
                 Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
                 choresList.add(temp);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -162,7 +157,16 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                int index;
+                ChorePost post = dataSnapshot.getValue(ChorePost.class);
+                Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
+                index = choresList.indexOf(temp);
+ //               Toast.makeText(getApplicationContext(), index, Toast.LENGTH_LONG).show();
+                if(index >= 0 && index < choresList.size()) {
+                    choresList.remove(index);
+                    mAdapter.notifyItemRemoved(index);
+                    mAdapter.notifyItemRangeChanged(index, choresList.size());
+                }
             }
 
             @Override
