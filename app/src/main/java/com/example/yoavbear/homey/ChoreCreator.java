@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -108,6 +109,7 @@ public class ChoreCreator extends AppCompatActivity {
     }
 
     public void initPostChoreToDatabase() {
+
         Button choreAddButton = (Button) findViewById(R.id.submit_button);
         choreAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,9 +119,9 @@ public class ChoreCreator extends AppCompatActivity {
                 TextView creatorTitleText = (TextView) findViewById(R.id.creator_text);
                 EditText choreTitleText = (EditText) findViewById(R.id.event_title);
                 EditText descriptionTitleText = (EditText) findViewById(R.id.event_description);
-                Spinner assigneeSpinner = (Spinner)  findViewById(R.id.assignees_spinner);
-                Spinner categorySpinner = (Spinner)  findViewById(R.id.categories_spinner);
-                Spinner prioritySpinner = (Spinner)  findViewById(R.id.priorities_spinner);
+                Spinner assigneeSpinner = (Spinner) findViewById(R.id.assignees_spinner);
+                Spinner categorySpinner = (Spinner) findViewById(R.id.categories_spinner);
+                Spinner prioritySpinner = (Spinner) findViewById(R.id.priorities_spinner);
 
                 String creator = creatorTitleText.getText().toString();
                 String choreTitle = choreTitleText.getText().toString();
@@ -128,18 +130,36 @@ public class ChoreCreator extends AppCompatActivity {
                 String category = categorySpinner.getSelectedItem().toString();
                 String priority = prioritySpinner.getSelectedItem().toString();
 
-                DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator).child(choreTitle);
+                if (assigneeSpinner.getSelectedItemId() == 0) {
+                    Toast.makeText(getApplicationContext(), "Please assign the chore to someone", Toast.LENGTH_LONG).show();
 
-                Map newChore = new HashMap();
-                newChore.put("assignee", assignee);
-                newChore.put("category", category);
-                newChore.put("priority", priority );
-                newChore.put("description", description);
+                } else if (choreTitle.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please give the chore a title", Toast.LENGTH_LONG).show();
 
-                dRaffChores.setValue(newChore);
+                } else {
 
+                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator).child(choreTitle);
+
+                    Map newChore = new HashMap();
+                    newChore.put("assignee", assignee);
+                    newChore.put("category", category);
+                    newChore.put("priority", priority);
+                    newChore.put("description", description);
+
+                    dRaffChores.setValue(newChore);
+
+                    Toast.makeText(getApplicationContext(),"The Chore was added successfully!",Toast.LENGTH_LONG).show();
+
+                    //reset fields
+                    choreTitleText.setText("");
+                    descriptionTitleText.setText("");
+                    assigneeSpinner.setSelection(0);
+                    categorySpinner.setSelection(0);
+                    prioritySpinner.setSelection(0);
+                }
             }
         });
+
     }
 
 }

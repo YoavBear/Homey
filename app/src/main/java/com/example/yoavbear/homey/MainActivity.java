@@ -2,6 +2,7 @@ package com.example.yoavbear.homey;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,18 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditClickListener, MyAdapter.OnDeleteClickListener {
 
     private Chore.FamilyMember creator;
-
+    private ArrayList<Chore> choresList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         choresRecyclerView.setLayoutManager(mLayoutManager);
 
-        MyAdapter mAdapter = new MyAdapter(this, getAllChores(creator));
+        //// this method is problematic
+        getAllChores(creator);
+
+        MyAdapter mAdapter = new MyAdapter(this, choresList);
         choresRecyclerView.setAdapter(mAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -135,32 +140,44 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
     }
 
-    public ArrayList<Chore> getAllChores(final Chore.FamilyMember creator) {
-        final ArrayList<Chore> choresList = new ArrayList<>();
+    public void getAllChores(final Chore.FamilyMember creator) {
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator.name());
 
-        dRaffChores.addValueEventListener(new ValueEventListener() {
+        //////BUG////////////////////////////////////////////////////////////////////////////////////////////
+        dRaffChores.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                ////////////////BUG////////////////////////////////////////
-//               for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-//                    ChorePost post = postSnapshot.getValue(ChorePost.class);
-//                    Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), postSnapshot.getKey(), post.getDescription(), post.getPriority());
-//                    System.out.println(post);
-//                    choresList.add(temp);
-//                }
+//                ChorePost post = dataSnapshot.getValue(ChorePost.class);
+//                Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
+//                choresList.add(temp);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //hard coded chore
         Chore first_chore = new Chore(Chore.FamilyMember.Yoav, Chore.FamilyMember.Yotam, Chore.Category.General, "First chore", "very important", Chore.Priority.Urgent);
         choresList.add(first_chore);
-        return choresList;
     }
 
     public static class ChorePost {
