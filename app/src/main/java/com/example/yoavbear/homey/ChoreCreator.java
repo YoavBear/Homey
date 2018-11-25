@@ -1,6 +1,7 @@
 package com.example.yoavbear.homey;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -132,11 +133,16 @@ public class ChoreCreator extends AppCompatActivity {
 
                 if (assigneeSpinner.getSelectedItemId() == 0) {
                     Toast.makeText(getApplicationContext(), "Please assign the chore to someone", Toast.LENGTH_LONG).show();
+                    assigneeSpinner.setBackgroundColor(Color.RED);
 
                 } else if (choreTitle.isEmpty()) {
+                    assigneeSpinner.setBackgroundColor(Color.WHITE);
                     Toast.makeText(getApplicationContext(), "Please give the chore a title", Toast.LENGTH_LONG).show();
+                    choreTitleText.setBackgroundColor(Color.RED);
 
                 } else {
+                    assigneeSpinner.setBackgroundColor(Color.WHITE);
+                    choreTitleText.setBackgroundColor(Color.WHITE);
 
                     DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator).child(choreTitle);
 

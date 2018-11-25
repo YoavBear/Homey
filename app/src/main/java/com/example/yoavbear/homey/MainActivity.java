@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         choresRecyclerView.setLayoutManager(mLayoutManager);
 
-        //// this method is problematic
         getAllChores(creator);
-
         MyAdapter mAdapter = new MyAdapter(this, choresList);
         choresRecyclerView.setAdapter(mAdapter);
 
@@ -145,11 +143,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator.name());
 
-        //////BUG////////////////////////////////////////////////////////////////////////////////////////////
+
         dRaffChores.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
 //                ChorePost post = dataSnapshot.getValue(ChorePost.class);
 //                Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
 //                choresList.add(temp);
@@ -175,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
             }
         });
-        //hard coded chore
+
         Chore first_chore = new Chore(Chore.FamilyMember.Yoav, Chore.FamilyMember.Yotam, Chore.Category.General, "First chore", "very important", Chore.Priority.Urgent);
         choresList.add(first_chore);
     }
