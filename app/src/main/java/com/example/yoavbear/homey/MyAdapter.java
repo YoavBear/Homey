@@ -55,8 +55,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.assignee.setText("Assignee: "+current.getAssignee().toString());
             holder.category.setText("Category: "+current.getCategory());
             holder.priority.setText("Priority: "+current.getPriority().toString());
-            holder.editChoreBtn.setText("EDIT EVENT");
-            holder.deleteChoreBtn.setText("DELETE EVENT");
+            holder.editChoreBtn.setText("EDIT CHORE");
+            holder.deleteChoreBtn.setText("DELETE CHORE");
 
             holder.editChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
