@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,8 +26,6 @@ public class ChoreCreator extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_creator);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         Intent i = getIntent();
         String creator = i.getStringExtra("user");
         TextView creatorText = (TextView)findViewById(R.id.creator_text);
@@ -36,7 +33,7 @@ public class ChoreCreator extends AppCompatActivity {
         initCatSpinner();
         initNamesSpinner();
         initPrioritySpinner();
-        initPostChoreToDatabase();
+        initPostChoreToDatabase("add");
 
     }
 
@@ -106,7 +103,7 @@ public class ChoreCreator extends AppCompatActivity {
         namesSpinner.setAdapter(dataAdapter);
     }
 
-    public void initPostChoreToDatabase() {
+    public void initPostChoreToDatabase(final String action) {
 
         Button choreAddButton = (Button) findViewById(R.id.submit_button);
         choreAddButton.setOnClickListener(new View.OnClickListener() {
@@ -150,8 +147,12 @@ public class ChoreCreator extends AppCompatActivity {
                     newChore.put("description", description);
 
                     dRaffChores.setValue(newChore);
-
-                    Toast.makeText(getApplicationContext(),"The Chore was added successfully!",Toast.LENGTH_LONG).show();
+                    if(action == "update") {
+                        Toast.makeText(getApplicationContext(), "The Chore was successfully updated!", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                     else
+                        Toast.makeText(getApplicationContext(),"The Chore was added successfully!",Toast.LENGTH_LONG).show();
 
                     //reset fields
                     choreTitleText.setText("");

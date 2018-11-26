@@ -161,7 +161,16 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                int index;
+                ChorePost post = dataSnapshot.getValue(ChorePost.class);
+                Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
+                index = choresList.indexOf(temp);
+                if(index >= 0 && index < choresList.size()) {
+                    choresList.remove(index); // remove the old chore
+                    choresList.add(index, temp); // add the new chore
+                    mAdapter.notifyItemRemoved(index);
+                    mAdapter.notifyItemRangeChanged(index, choresList.size());
+                }
             }
 
             @Override

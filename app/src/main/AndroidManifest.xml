@@ -21,13 +21,10 @@
         <activity
             android:name=".ChoreCreator"
             android:label="@string/title_activity_chore_creator"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ChoreUpdater"
-            android:theme="@style/AppTheme.NoActionBar">
-
+            android:name=".ChoreUpdater">
+            android:theme="@style/AppTheme.NoActionBar" />
         </activity>
     </application>
 

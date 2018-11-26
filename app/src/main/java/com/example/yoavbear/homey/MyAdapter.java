@@ -74,13 +74,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.editChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(current.getCreator().toString());
-////////////////////////////////////////////////////BUG////////////////////////////////////////////////////////////////
-                    Toast.makeText(v.getContext(), "Not working yet", Toast.LENGTH_LONG).show();
-                    //problem with ChoreUpdater class
-//                    Intent i = new Intent(v.getContext(), ChoreUpdater.class);
-//                    i.putExtra("user", current.getCreator().toString());
-//                    v.getContext().startActivity(i);
+                    Intent i = new Intent(v.getContext(), ChoreUpdater.class);
+                    i.putExtra("user", current.getCreator().toString());
+                    i.putExtra("choreTitle" ,current.getTitle());
+                    v.getContext().startActivity(i);
                 }
             });
 
