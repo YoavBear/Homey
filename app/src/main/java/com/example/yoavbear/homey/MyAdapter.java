@@ -40,6 +40,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.onDeleteClickListener = ((OnDeleteClickListener) context);
     }
 
+    public void updateList(ArrayList<Chore> data)
+    {
+        this.data = data;
+        this.notifyDataSetChanged();
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

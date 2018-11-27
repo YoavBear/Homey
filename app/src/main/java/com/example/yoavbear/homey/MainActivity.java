@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +29,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private ArrayList<Chore> choresList = new ArrayList<>();
     private MyAdapter mAdapter;
+    private Chore.Priority chosenPriority = Chore.Priority.Priority;
+    private Chore.FamilyMember chosenFamilyMember = Chore.FamilyMember.Users;
+    private Chore.Category chosenCategory = Chore.Category.Category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +40,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
         creator = Chore.FamilyMember.Yoav;
 
-        initCatSpinner();
-        initNamesSpinner();
-        initPrioritySpinner();
+
+
         handleChoresList(creator);
 
         RecyclerView choresRecyclerView = (RecyclerView) findViewById(R.id.chores_rView);
@@ -57,11 +61,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
                 startActivity(i);
             }
         });
-
+        initCatSpinner();
+        initNamesSpinner();
+        initPrioritySpinner();
     }
 
     public void initPrioritySpinner() {
-        Spinner namesSpinner = (Spinner) findViewById(R.id.priorities_spinner);
+        Spinner prioritySpinner = (Spinner) findViewById(R.id.priorities_spinner);
 
         // Spinner Drop down elements
         List<String> priorities = new ArrayList<String>();
@@ -78,7 +84,47 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        namesSpinner.setAdapter(dataAdapter);
+        prioritySpinner.setAdapter(dataAdapter);
+        addSpinnerListener(prioritySpinner);
+
+    }
+
+    public void addSpinnerListener(final Spinner spinner){
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(!choresList.isEmpty())
+                {
+                    if(spinner.getId()==R.id.priorities_spinner)
+                    {
+                        Chore.Priority priority = Chore.Priority.valueOf((String) adapterView.getAdapter().getItem(i));
+                        chosenPriority = priority;
+                        updateChores();
+                    }
+                    if(spinner.getId()==R.id.names_spinner)
+                    {
+                        Chore.FamilyMember fm = Chore.FamilyMember.valueOf((String) adapterView.getAdapter().getItem(i));
+                        chosenFamilyMember = fm;
+                        updateChores();
+                    }
+                    if(spinner.getId()==R.id.categories_spinner)
+                    {
+                        Chore.Category category = Chore.Category.valueOf((String) adapterView.getAdapter().getItem(i));
+                        chosenCategory = category;
+                        updateChores();
+                    }
+
+
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     public void initNamesSpinner() {
@@ -101,10 +147,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
         // attaching data adapter to spinner
         namesSpinner.setAdapter(dataAdapter);
+        addSpinnerListener(namesSpinner);
     }
 
     public void initCatSpinner() {
-        Spinner namesSpinner = (Spinner) findViewById(R.id.types_spinner);
+        Spinner catSpinner = (Spinner) findViewById(R.id.types_spinner);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
@@ -123,9 +170,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        namesSpinner.setAdapter(dataAdapter);
+        catSpinner.setAdapter(dataAdapter);
+        addSpinnerListener(catSpinner);
     }
-
 
     @Override
     public void onEditClick(Chore chore) {
@@ -157,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
                 Chore temp = new Chore(creator, post.getAssignee(), post.getCategory(), dataSnapshot.getKey(), post.getDescription(), post.getPriority());
                 choresList.add(temp);
                 mAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -246,6 +294,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         public void setPriority(Chore.Priority priority) {
             this.priority = priority;
         }
+    }
+
+    public void updateChores()
+    {
+        ArrayList<Chore> tempList = new ArrayList<Chore>();
+        for (Chore chore : choresList) {
+            if((chore.getPriority().equals(chosenPriority) || chosenPriority.equals(Chore.Priority.Priority))
+                    && (chore.getCategory().equals(chosenCategory) || chosenCategory.equals(Chore.Category.Category))
+                    && (chore.getAssignee().equals(chosenFamilyMember) || chosenFamilyMember.equals(Chore.FamilyMember.Users))){
+                tempList.add(chore);
+            }
+        }
+        mAdapter.updateList(tempList);
     }
 
 }
