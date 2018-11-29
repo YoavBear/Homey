@@ -3,6 +3,8 @@ package com.example.yoavbear.homey;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,13 +27,15 @@ import java.util.Map;
 
 public class ChoreCreator extends AppCompatActivity {
 
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_creator);
         Intent i = getIntent();
         String creator = i.getStringExtra("user");
-        TextView creatorText = (TextView)findViewById(R.id.creator_text);
+        TextView creatorText = (TextView) findViewById(R.id.creator_text);
         creatorText.setText(creator);
         initCatSpinner();
         initNamesSpinner();
@@ -37,16 +44,14 @@ public class ChoreCreator extends AppCompatActivity {
 
     }
 
-    public void initPrioritySpinner(){
+    public void initPrioritySpinner() {
         Spinner namesSpinner = (Spinner) findViewById(R.id.priorities_spinner);
 
         // Spinner Drop down elements
         List<String> priorities = new ArrayList<String>();
-        priorities.add("Priority");
-        priorities.add("Urgent");
-        priorities.add("High");
-        priorities.add("Medium");
-        priorities.add("Low");
+        for (Chore.Priority priority : Chore.Priority.values()) {
+            priorities.add(priority.toString());
+        }
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, priorities);
@@ -58,40 +63,62 @@ public class ChoreCreator extends AppCompatActivity {
         namesSpinner.setAdapter(dataAdapter);
     }
 
-    public void initNamesSpinner(){
-        Spinner namesSpinner = (Spinner) findViewById(R.id.assignees_spinner);
+    public void initNamesSpinner() {
+        final Spinner namesSpinner = (Spinner) findViewById(R.id.assignees_spinner);
 
         // Spinner Drop down elements
-        List<String> names = new ArrayList<String>();
-        names.add("Users");
-        names.add("Aviad");
-        names.add("Vlad_B");
-        names.add("Vlad_M");
-        names.add("Yoav");
-        names.add("Yotam");
+         final List<String> names = new ArrayList<String>();
+         names.add("Users");
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, names);
+        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, names);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
         namesSpinner.setAdapter(dataAdapter);
+
+        DatabaseReference dRaffUsers = database.getReference().child("Users");
+
+        dRaffUsers.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                names.add(dataSnapshot.getValue().toString());
+                dataAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
-    public void initCatSpinner(){
+    public void initCatSpinner() {
         Spinner namesSpinner = (Spinner) findViewById(R.id.categories_spinner);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        categories.add("Category");
-        categories.add("General");
-        categories.add("Laundry");
-        categories.add("Cleaning");
-        categories.add("Dishes");
-        categories.add("Shopping");
-        categories.add("Errands");
+        for (Chore.Category category : Chore.Category.values()) {
+            categories.add(category.toString());
+        }
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -147,12 +174,11 @@ public class ChoreCreator extends AppCompatActivity {
                     newChore.put("description", description);
 
                     dRaffChores.setValue(newChore);
-                    if(action == "update") {
+                    if (action == "update") {
                         Toast.makeText(getApplicationContext(), "The Chore was successfully updated!", Toast.LENGTH_LONG).show();
                         finish();
-                    }
-                     else
-                        Toast.makeText(getApplicationContext(),"The Chore was added successfully!",Toast.LENGTH_LONG).show();
+                    } else
+                        Toast.makeText(getApplicationContext(), "The Chore was added successfully!", Toast.LENGTH_LONG).show();
 
                     //reset fields
                     choreTitleText.setText("");

@@ -40,8 +40,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.onDeleteClickListener = ((OnDeleteClickListener) context);
     }
 
-    public void updateList(ArrayList<Chore> data)
-    {
+    public void updateList(ArrayList<Chore> data) {
         this.data = data;
         this.notifyDataSetChanged();
     }
@@ -49,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Create new views (invoked by the layout manager)
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view =  inflater.inflate(R.layout.chore_row_layout, parent, false);
+        View view = inflater.inflate(R.layout.chore_row_layout, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -57,21 +56,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        if(position<data.size()) {
+        if (position < data.size()) {
             final Chore current = data.get(position);
-            holder.title.setText("Title: "+current.getTitle());
-            holder.description.setText("Description: "+current.getDescription());
-            holder.creator.setText("Creator: "+current.getCreator().toString());
-            holder.assignee.setText("Assignee: "+current.getAssignee().toString());
-            holder.category.setText("Category: "+current.getCategory());
-            holder.priority.setText("Priority: "+current.getPriority().toString());
+            holder.title.setText("Title: " + current.getTitle());
+            holder.description.setText("Description: " + current.getDescription());
+            holder.creator.setText("Creator: " + current.getCreator().toString());
+            holder.assignee.setText("Assignee: " + current.getAssignee().toString());
+            holder.category.setText("Category: " + current.getCategory());
+            holder.priority.setText("Priority: " + current.getPriority().toString());
             holder.editChoreBtn.setText("EDIT CHORE");
             holder.deleteChoreBtn.setText("DELETE CHORE");
 
             holder.deleteChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(current.getCreator().toString());
+                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(current.getCreator());
                     dRaffChores.child(current.getTitle()).removeValue();
                     Toast.makeText(v.getContext(), "The chore was successfully removed", Toast.LENGTH_LONG).show();
                 }
@@ -81,8 +80,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(v.getContext(), ChoreUpdater.class);
-                    i.putExtra("user", current.getCreator().toString());
-                    i.putExtra("choreTitle" ,current.getTitle());
+                    i.putExtra("user", current.getCreator());
+                    i.putExtra("choreTitle", current.getTitle());
                     v.getContext().startActivity(i);
                 }
             });

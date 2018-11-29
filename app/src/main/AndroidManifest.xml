@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,10 +22,11 @@
             android:name=".ChoreCreator"
             android:label="@string/title_activity_chore_creator"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ChoreUpdater">
+        <activity android:name=".ChoreUpdater">
             android:theme="@style/AppTheme.NoActionBar" />
         </activity>
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

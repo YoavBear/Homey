@@ -29,6 +29,7 @@ dependencies {
     //firebase database
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-database:16.0.4'
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
     //firebase database
 
     implementation 'com.android.support:design:28.0.0'
