@@ -188,10 +188,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         addSpinnerListener(catSpinner);
     }
 
-    @Override
-    public void onEditClick(Chore chore) {
-    }
-
 
     @Override
     public void onEditClick(Chore chore) {
@@ -273,6 +269,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
             }
         });
+    }
+
+    @Override
+    public void onDeleteClick(Chore chore) {
+
     }
 
     public static class ChorePost {
