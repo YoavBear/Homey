@@ -26,13 +26,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class ChoreCreator extends AppCompatActivity {
 
     private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+@Override
+  protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chore_creator);
         Intent i = getIntent();
         String creator = i.getStringExtra("user");
@@ -45,8 +45,9 @@ public class ChoreCreator extends AppCompatActivity {
 
     }
 
-    public void initPrioritySpinner() {
-        Spinner namesSpinner = (Spinner) findViewById(R.id.priorities_spinner);
+    public void initPrioritySpinner(){
+
+       Spinner prioritiesSpinner = (Spinner) findViewById(R.id.priorities_spinner);
 
         // Spinner Drop down elements
         List<String> priorities = new ArrayList<String>();
@@ -61,19 +62,20 @@ public class ChoreCreator extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        namesSpinner.setAdapter(dataAdapter);
+        prioritiesSpinner.setAdapter(dataAdapter);
     }
+
 
     public void initNamesSpinner() {
         final Spinner namesSpinner = (Spinner) findViewById(R.id.assignees_spinner);
-
+      
         // Spinner Drop down elements
          final List<String> names = new ArrayList<String>();
          names.add("Users");
 
         // Creating adapter for spinner
         final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, names);
-
+    
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -112,7 +114,8 @@ public class ChoreCreator extends AppCompatActivity {
 
     }
 
-    public void initCatSpinner() {
+    public void initCatSpinner(){
+
         Spinner namesSpinner = (Spinner) findViewById(R.id.categories_spinner);
 
         // Spinner Drop down elements

@@ -11,10 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -32,6 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         void onDeleteClick(Chore chore);
     }
 
+
     // Provide a suitable constructor (depends on the kind of data set)
     public MyAdapter(Context context, @Nullable ArrayList<Chore> data) {
         inflater = LayoutInflater.from(context);
@@ -39,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.onEditClickListener = ((OnEditClickListener) context);
         this.onDeleteClickListener = ((OnDeleteClickListener) context);
     }
+
 
     public void updateList(ArrayList<Chore> data) {
         this.data = data;
@@ -90,6 +95,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
 
+
     // Return the size of your data set (invoked by the layout manager)
     @Override
     public int getItemCount() {
@@ -123,7 +129,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             editChoreBtn = v.findViewById(R.id.choreButton_edit);
 
             deleteChoreBtn = v.findViewById(R.id.choreButton_delete);
-
         }
     }
 }

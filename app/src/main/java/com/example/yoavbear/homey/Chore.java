@@ -1,5 +1,6 @@
 package com.example.yoavbear.homey;
 
+
 public class Chore {
 
     @Override
@@ -79,5 +80,4 @@ public class Chore {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
-    }
 }

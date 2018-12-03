@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
     private Chore.Category chosenCategory = Chore.Category.Categories;
     private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         choresRecyclerView.setLayoutManager(mLayoutManager);
+
 
         mAdapter = new MyAdapter(this, choresList);
         choresRecyclerView.setAdapter(mAdapter);
@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         initPrioritySpinner();
     }
 
-    public void initPrioritySpinner() {
+
+    public void initPrioritySpinner(){
         Spinner prioritySpinner = (Spinner) findViewById(R.id.priorities_spinner);
 
         // Spinner Drop down elements
@@ -166,8 +167,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         });
     }
 
-    public void initCatSpinner() {
-        Spinner catSpinner = (Spinner) findViewById(R.id.types_spinner);
+
+    public void initCatSpinner(){
+ Spinner catSpinner = (Spinner) findViewById(R.id.types_spinner);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
@@ -188,13 +190,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
     @Override
     public void onEditClick(Chore chore) {
-
     }
+
 
     @Override
-    public void onDeleteClick(Chore chore) {
-
+    public void onEditClick(Chore chore) {
     }
+
 
     public void handleChoresList(final String creator) {
 

@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
             android:text="@string/house_chores"
+
             android:textColor="@color/mainActivityTitle"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -70,13 +71,12 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chores_rView"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         android:scrollbars="vertical">
 
 
 
     </android.support.v7.widget.RecyclerView>
-
-
 
 </LinearLayout>
