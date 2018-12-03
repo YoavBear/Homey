@@ -26,7 +26,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         </activity>
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".FamilyMemberLoginActivity" />
+        <activity android:name=".AddFamilyMemberActivity"></activity>
     </application>
 
 </manifest>

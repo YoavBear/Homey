@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +26,7 @@ public class ChoreUpdater extends ChoreCreator {
     private Spinner prioritySpinner;
     private String creator;
     private String choreTitle;
+    private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class ChoreUpdater extends ChoreCreator {
 
     public void initUpdateChoreInDatabase() {
 
-        DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator).child(choreTitle);
+        DatabaseReference dRaffChores = FirebaseDatabase.getInstance().getReference().child("Households").child(user_id).child("Chores").child(creator).child(choreTitle);
         dRaffChores.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

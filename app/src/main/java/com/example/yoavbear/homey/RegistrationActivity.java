@@ -43,7 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String pass = mPasswordReg.getText().toString();
 
                 if (mName.getText().toString().isEmpty())
-                    Toast.makeText(getApplicationContext(), "Please enter a valid name!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter a valid household name!", Toast.LENGTH_LONG).show();
                 else if (email.isEmpty())
                     Toast.makeText(getApplicationContext(), "Please enter a valid email!", Toast.LENGTH_LONG).show();
                 else if (pass.isEmpty())
@@ -59,14 +59,13 @@ public class RegistrationActivity extends AppCompatActivity {
                             } else {
                                 String name = mName.getText().toString();
                                 String user_id = mAut.getCurrentUser().getUid();
-                                DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+                                DatabaseReference currentUser = FirebaseDatabase.getInstance().getReference().child("Households").child(user_id).child("Household name");
                                 currentUser.setValue(name);
 
                                 Toast.makeText(getApplicationContext(), "Successfully registered!", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
-                                return;
                             }
                         }
                     });
@@ -80,7 +79,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
-                return;
             }
         });
 

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
     private Chore.Priority chosenPriority = Chore.Priority.Priorities;
     private String chosenFamilyMember = "Users";
     private Chore.Category chosenCategory = Chore.Category.Categories;
+    private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
     @Override
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        creator = LoginActivity.currentUser;
+        creator = getIntent().getStringExtra("familyMember");
         handleChoresList(creator);
         RecyclerView choresRecyclerView = (RecyclerView) findViewById(R.id.chores_rView);
 
@@ -133,12 +135,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
         namesSpinner.setAdapter(dataAdapter);
         addSpinnerListener(namesSpinner);
 
-        DatabaseReference dRaffUsers = database.getReference().child("Users");
+        DatabaseReference dRaffUsers = FirebaseDatabase.getInstance().getReference().child("Households").child(user_id).child("Family Members");
 
         dRaffUsers.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                names.add(dataSnapshot.getValue().toString());
+                names.add(dataSnapshot.getKey());
                 dataAdapter.notifyDataSetChanged();
             }
 
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnEditC
 
     public void handleChoresList(final String creator) {
 
-        DatabaseReference dRaffAllChores = database.getReference().child("Chores");
+        DatabaseReference dRaffAllChores = database.getReference().child("Households").child(user_id).child("Chores");
 
         dRaffAllChores.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

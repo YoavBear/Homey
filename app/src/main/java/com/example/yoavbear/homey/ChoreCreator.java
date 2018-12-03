@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 public class ChoreCreator extends AppCompatActivity {
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +80,12 @@ public class ChoreCreator extends AppCompatActivity {
         // attaching data adapter to spinner
         namesSpinner.setAdapter(dataAdapter);
 
-        DatabaseReference dRaffUsers = database.getReference().child("Users");
+        DatabaseReference dRaffUsers = FirebaseDatabase.getInstance().getReference().child("Households").child(user_id).child("Family Members");
 
         dRaffUsers.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                names.add(dataSnapshot.getValue().toString());
+                names.add(dataSnapshot.getKey());
                 dataAdapter.notifyDataSetChanged();
             }
 
@@ -136,7 +137,6 @@ public class ChoreCreator extends AppCompatActivity {
         choreAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                 TextView creatorTitleText = (TextView) findViewById(R.id.creator_text);
                 EditText choreTitleText = (EditText) findViewById(R.id.event_title);
@@ -165,7 +165,7 @@ public class ChoreCreator extends AppCompatActivity {
                     assigneeSpinner.setBackgroundColor(Color.WHITE);
                     choreTitleText.setBackgroundColor(Color.WHITE);
 
-                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(creator).child(choreTitle);
+                    DatabaseReference dRaffChores = FirebaseDatabase.getInstance().getReference().child("Households").child(user_id).child("Chores").child(creator).child(choreTitle);
 
                     Map newChore = new HashMap();
                     newChore.put("assignee", assignee);

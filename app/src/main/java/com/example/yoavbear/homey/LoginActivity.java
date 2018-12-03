@@ -49,12 +49,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
-                    DatabaseReference dRaffUsers = database.getReference().child("Users").child(user.getUid());
-                    dRaffUsers.addValueEventListener(new ValueEventListener() {
+                    DatabaseReference dRaffUsers = database.getReference().child("Households").child(user.getUid());
+                    dRaffUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             LoginActivity.currentUser = dataSnapshot.getValue().toString();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, FamilyMemberLoginActivity.class);
                             startActivity(intent);
                             finish();
                             return;
