@@ -1,43 +1,52 @@
 package com.example.yoavbear.homey;
 
-import android.widget.FrameLayout;
 
 public class Chore {
 
-    public enum FamilyMember {Aviad, Vlad_B, Vlad_M, Yoav, Yotam}
-    public enum Category {Category, General,Laundry, Cleaning, Dishes, Shopping, Errands}
+    @Override
+    public boolean equals(Object o) {
+        if ((this.getCreator().equals(((Chore) o).getCreator())) && (this.getTitle().equals(((Chore) o).getTitle())))
+            return true;
+        else return false;
+    }
 
-    private FamilyMember creator;
-    private FamilyMember assignee;
+    public enum Category {Categories, General, Laundry, Cleaning, Dishes, Shopping, Errands}
+
+    public enum Priority {Priorities, Urgent, High, Medium, Low}
+
+    private String creator;
+    private String assignee;
     private Category category;
     private String title;
     private String description;
+    private Priority priority;
 
-    public Chore(FamilyMember creator, FamilyMember assignee, Category category, String title, String description) {
-        this.creator = creator ;
+    public Chore(String creator, String assignee, Category category, String title, String description, Priority priority) {
+        this.creator = creator;
         this.assignee = assignee;
         this.category = category;
         this.title = title;
         this.description = description;
+        this.priority = priority;
     }
 
     public Chore() {
 
     }
 
-    public FamilyMember getCreator() {
+    public String getCreator() {
         return creator;
     }
 
-    public void setCreator(FamilyMember creator) {
+    public void setCreator(String creator) {
         this.creator = creator;
     }
 
-    public FamilyMember getAssignee() {
+    public String getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(FamilyMember assignee) {
+    public void setAssignee(String assignee) {
         this.assignee = assignee;
     }
 
@@ -57,14 +66,6 @@ public class Chore {
         this.description = description;
     }
 
-    public FamilyMember getFamilyMember() {
-        return creator;
-    }
-
-    public void setFamilyMember(FamilyMember familyMember) {
-        this.creator = familyMember;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -72,4 +73,11 @@ public class Chore {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
 }

@@ -1,6 +1,7 @@
 package com.example.yoavbear.homey;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -20,7 +25,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ArrayList<Chore> data;
     private OnEditClickListener onEditClickListener;
     private OnDeleteClickListener onDeleteClickListener;
-
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public interface OnEditClickListener {
         void onEditClick(Chore chore);
@@ -30,7 +35,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         void onDeleteClick(Chore chore);
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+
+    // Provide a suitable constructor (depends on the kind of data set)
     public MyAdapter(Context context, @Nullable ArrayList<Chore> data) {
         inflater = LayoutInflater.from(context);
         this.data = data;
@@ -38,10 +44,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.onDeleteClickListener = ((OnDeleteClickListener) context);
     }
 
+
+    public void updateList(ArrayList<Chore> data) {
+        this.data = data;
+        this.notifyDataSetChanged();
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view =  inflater.inflate(R.layout.chore_row_layout, parent, false);
+        View view = inflater.inflate(R.layout.chore_row_layout, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -49,31 +61,33 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        if(position<data.size()) {
+        if (position < data.size()) {
             final Chore current = data.get(position);
-            holder.title.setText("Title: "+current.getTitle());
-            holder.description.setText("Description: "+current.getDescription());
-            holder.creator.setText("Creator: "+current.getCreator().toString());
-            holder.assignee.setText("Assignee: "+current.getAssignee().toString());
-            holder.category.setText("Category: "+current.getCategory());
-            holder.joinBtn.setText("EDIT EVENT");
-            holder.moreFromCreatorBtn.setText("DELETE EVENT");
-            holder.joinBtn.setOnClickListener(new View.OnClickListener() {
+            holder.title.setText("Title: " + current.getTitle());
+            holder.description.setText("Description: " + current.getDescription());
+            holder.creator.setText("Creator: " + current.getCreator().toString());
+            holder.assignee.setText("Assignee: " + current.getAssignee().toString());
+            holder.category.setText("Category: " + current.getCategory());
+            holder.priority.setText("Priority: " + current.getPriority().toString());
+            holder.editChoreBtn.setText("EDIT CHORE");
+            holder.deleteChoreBtn.setText("DELETE CHORE");
+
+            holder.deleteChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holder.title.setText("join button pressed");
+                    DatabaseReference dRaffChores = database.getReference().child("Chores").child(current.getCreator());
+                    dRaffChores.child(current.getTitle()).removeValue();
+                    Toast.makeText(v.getContext(), "The chore was successfully removed", Toast.LENGTH_LONG).show();
                 }
             });
-            holder.moreFromCreatorBtn.setOnClickListener(new View.OnClickListener() {
+
+            holder.editChoreBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onDeleteClickListener.onDeleteClick(current);
-                }
-            });
-            holder.joinBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onEditClickListener.onEditClick(current);
+                    Intent i = new Intent(v.getContext(), ChoreUpdater.class);
+                    i.putExtra("user", current.getCreator());
+                    i.putExtra("choreTitle", current.getTitle());
+                    v.getContext().startActivity(i);
                 }
             });
 
@@ -81,7 +95,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
 
-    // Return the size of your dataset (invoked by the layout manager)
+
+    // Return the size of your data set (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return data.size();
@@ -92,13 +107,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
-        public  TextView description;
-        public  TextView assignee;
+        public TextView description;
+        public TextView assignee;
         public TextView category;
         public TextView creator;
+        public TextView priority;
 
-        public Button joinBtn;
-        public Button moreFromCreatorBtn;
+        public Button editChoreBtn;
+        public Button deleteChoreBtn;
 
 
         public MyViewHolder(View v) {
@@ -108,9 +124,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             creator = v.findViewById(R.id.eventRow_creator);
             assignee = v.findViewById(R.id.eventRow_assignee);
             category = v.findViewById(R.id.eventRow_category);
+            priority = v.findViewById(R.id.eventRow_priority);
 
-            joinBtn = v.findViewById(R.id.eventRow_join);
-            moreFromCreatorBtn = v.findViewById(R.id.eventRow_more);
+            editChoreBtn = v.findViewById(R.id.choreButton_edit);
+
+            deleteChoreBtn = v.findViewById(R.id.choreButton_delete);
         }
     }
 }
