@@ -28,12 +28,9 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FamilyMemberLoginActivity" />
-        <activity android:name=".AddFamilyMemberActivity"></activity>
-
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
+        <activity android:name=".AddFamilyMemberActivity" />
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".CompletedChoresActivity"></activity>
     </application>
 
 </manifest>

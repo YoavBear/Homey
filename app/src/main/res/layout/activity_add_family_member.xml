@@ -46,14 +46,25 @@
                 android:hint="Password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
-
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
         <Button
             android:id="@+id/button_dbay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Set Birthday"
-            />
+            android:text="Set Birthday" />
+
+    <TextView
+        android:id="@+id/bDay_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="1dp"
+        android:layout_toRightOf="@id/button_dbay"
+        android:textSize="20dip" />
+
+</RelativeLayout>
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"

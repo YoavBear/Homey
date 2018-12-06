@@ -80,4 +80,5 @@ public class Chore {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
 }
