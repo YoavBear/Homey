@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +27,7 @@ import java.util.Map;
 public class AddFamilyMemberActivity extends AppCompatActivity {
     private EditText mName, mPasswordReg;
     private Button mAddFamilyMember, mBirthday;
-    private TextView mGoBack;
+    private TextView mGoBack, mBirthdayText;
     private RadioButton mParent, mChild;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String birthDay = "";
@@ -42,6 +44,7 @@ public class AddFamilyMemberActivity extends AppCompatActivity {
         mParent = (RadioButton) findViewById(R.id.radioButton_parent);
         mChild = (RadioButton) findViewById(R.id.radioButton_child);
         mBirthday = (Button) findViewById(R.id.button_dbay);
+        mBirthdayText = (TextView) findViewById(R.id.bDay_textView);
 
         mParent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +72,7 @@ public class AddFamilyMemberActivity extends AppCompatActivity {
         });
 
         mAddFamilyMember.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
             @Override
             public void onClick(View v) {
                 String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -128,6 +132,7 @@ public class AddFamilyMemberActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 birthDay = day + "/" + month + "/" + year;
+                mBirthdayText.setText(birthDay);
             }
         };
 

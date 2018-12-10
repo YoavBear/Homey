@@ -21,16 +21,16 @@
         <activity
             android:name=".ChoreCreator"
             android:label="@string/title_activity_chore_creator"
-            android:theme="@style/AppTheme.NoActionBar" >
-            </activity>
-        <activity android:name=".ChoreUpdater"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChoreUpdater">
+            android:theme="@style/AppTheme.NoActionBar" />
         </activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FamilyMemberLoginActivity" />
-        <activity android:name=".AddFamilyMemberActivity"/>
-
+        <activity android:name=".AddFamilyMemberActivity" />
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".CompletedChoresActivity"></activity>
     </application>
 
 </manifest>
