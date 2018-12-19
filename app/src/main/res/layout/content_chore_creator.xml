@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ChoreCreator"
-    >
+    tools:context=".ChoreCreator">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp">
@@ -22,19 +21,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Event's Creator:"
-            android:textSize="18sp"
             android:paddingLeft="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+            android:text="Event's Creator:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/creator_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="18sp"
             android:text="Creator"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:textSize="18sp" />
 
 
     </LinearLayout>
@@ -43,26 +42,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="18sp"
-            android:text="Assignee:"
             android:paddingLeft="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+            android:text="Assignee:"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/assignees_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.8">
-
-        </Spinner>
+            android:layout_weight="0.8"></Spinner>
 
     </LinearLayout>
 
@@ -70,26 +67,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="18sp"
-            android:text="Category:"
             android:paddingLeft="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+            android:text="Category:"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/categories_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.8">
-
-        </Spinner>
+            android:layout_weight="0.8"></Spinner>
 
     </LinearLayout>
 
@@ -97,26 +92,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="18sp"
-            android:text="Priority:"
             android:paddingLeft="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+            android:text="Priority:"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/priorities_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.8">
-
-        </Spinner>
+            android:layout_weight="0.8"></Spinner>
 
     </LinearLayout>
 
@@ -129,8 +122,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/set_event_title"
         android:paddingLeft="8dp"
+        android:text="@string/set_event_title"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
 
     <EditText
@@ -138,21 +131,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:lines="2"
-        android:minLines="2"
-        android:maxLines="10"
-        android:textSize="20sp"
         android:gravity="top|left"
         android:inputType="textMultiLine"
+        android:lines="2"
+        android:maxLines="10"
+        android:minLines="2"
+        android:paddingTop="8dp"
         android:scrollbars="vertical"
-        />
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/set_event_description"
         android:paddingLeft="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"/>
+        android:text="@string/set_event_description"
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
 
 
     <EditText
@@ -160,21 +153,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:lines="4"
-        android:minLines="2"
-        android:maxLines="10"
-        android:textSize="20sp"
         android:gravity="top|left"
         android:inputType="textMultiLine"
+        android:lines="4"
+        android:maxLines="10"
+        android:minLines="2"
+        android:paddingTop="8dp"
         android:scrollbars="vertical"
-        />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
         android:text="@string/submit_activity"
-        android:visibility="visible"
-
-        />
+        android:visibility="visible" />
 </LinearLayout>

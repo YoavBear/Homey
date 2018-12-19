@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Homey</string>
     <string name="filter_by">FILTER BY:</string>
-    <string name="house_chores">House Chores</string>
+    <string name="house_chores">House Chores</string>completed_chores
+    <string name="completed_chores">Completed Chores</string>
     <string name="join_event">Join Event</string>
     <string name="title_activity_chore_creator">ChoreCreator</string>
     <string name="set_event_title">Event\'s Title</string>
     <string name="set_event_description">Event\'s Description</string>
     <string name="submit_activity">Submit Chore</string>
+    <string name="close">Close</string>
+    <string name="open">Open</string>
 </resources>

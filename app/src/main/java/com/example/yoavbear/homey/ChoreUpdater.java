@@ -17,8 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ChoreUpdater extends ChoreCreator {
 
-    private FirebaseDatabase database;
-    private TextView creatorTitleText;
     private EditText choreTitleText;
     private EditText descriptionTitleText;
     private Spinner assigneeSpinner;
@@ -32,11 +30,9 @@ public class ChoreUpdater extends ChoreCreator {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        database = FirebaseDatabase.getInstance();
         Intent i = getIntent();
         creator = i.getStringExtra("user");
         choreTitle = i.getStringExtra("choreTitle");
-        creatorTitleText = (TextView) findViewById(R.id.creator_text);
         choreTitleText = (EditText) findViewById(R.id.event_title);
         descriptionTitleText = (EditText) findViewById(R.id.event_description);
         assigneeSpinner = (Spinner) findViewById(R.id.assignees_spinner);
