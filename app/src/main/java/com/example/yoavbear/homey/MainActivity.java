@@ -83,7 +83,11 @@ public class MainActivity extends AppCompatActivity {
                         dl.closeDrawers();
                         return true;
                     case R.id.addShoppingCart:
-                        Toast.makeText(MainActivity.this, "TODO: ADD SHOPPING CART",Toast.LENGTH_SHORT).show();
+                        Intent i3 = new Intent(getApplicationContext(), ShoppingListActivity.class);
+                        i3.putExtra("user", creator);
+                        startActivity(i3);
+                        dl.closeDrawers();
+                        // Toast.makeText(MainActivity.this, "TODO: ADD SHOPPING CART",Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.completedChores:
                         Intent i2 = new Intent(getApplicationContext(), CompletedChoresActivity.class);

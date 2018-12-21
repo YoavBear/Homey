@@ -30,7 +30,8 @@
         <activity android:name=".FamilyMemberLoginActivity" />
         <activity android:name=".AddFamilyMemberActivity" />
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".CompletedChoresActivity"></activity>
+        <activity android:name=".CompletedChoresActivity" />
+        <activity android:name=".ShoppingListActivity"></activity>
     </application>
 
 </manifest>

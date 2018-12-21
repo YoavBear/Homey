@@ -2,6 +2,7 @@
     <string name="app_name">Homey</string>
     <string name="filter_by">FILTER BY:</string>
     <string name="house_chores">House Chores</string>completed_chores
+    <string name="shopping_list">Shopping List</string>
     <string name="completed_chores">Completed Chores</string>
     <string name="join_event">Join Event</string>
     <string name="title_activity_chore_creator">ChoreCreator</string>
