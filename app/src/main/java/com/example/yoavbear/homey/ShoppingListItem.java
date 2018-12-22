@@ -17,7 +17,7 @@ public class ShoppingListItem {
     private String description;
     private Priority priority;
 
-    public ShoppingListItem(String creator, String assignee, String title, String description, Priority priority) {
+    public ShoppingListItem(String creator, String title, String description, Priority priority) {
         this.creator = creator;
         this.title = title;
         this.description = description;

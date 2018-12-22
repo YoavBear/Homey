@@ -31,7 +31,8 @@
         <activity android:name=".AddFamilyMemberActivity" />
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".CompletedChoresActivity" />
-        <activity android:name=".ShoppingListActivity"></activity>
+        <activity android:name=".ShoppingListActivity" />
+        <activity android:name=".ShoppingListItemCreator"></activity>
     </application>
 
 </manifest>

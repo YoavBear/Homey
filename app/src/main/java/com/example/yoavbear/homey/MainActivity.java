@@ -82,12 +82,18 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(i);
                         dl.closeDrawers();
                         return true;
-                    case R.id.addShoppingCart:
+                    case R.id.viewShoppingCart:
                         Intent i3 = new Intent(getApplicationContext(), ShoppingListActivity.class);
                         i3.putExtra("user", creator);
                         startActivity(i3);
                         dl.closeDrawers();
-                        // Toast.makeText(MainActivity.this, "TODO: ADD SHOPPING CART",Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.addShoppingCart:
+                        Intent i4 = new Intent(getApplicationContext(), ShoppingListItemCreator.class);
+                        i4.putExtra("user", creator);
+                        startActivity(i4);
+                        dl.closeDrawers();
+                        //Toast.makeText(getApplicationContext(),"TODO: add shopping list item logic and activity",Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.completedChores:
                         Intent i2 = new Intent(getApplicationContext(), CompletedChoresActivity.class);

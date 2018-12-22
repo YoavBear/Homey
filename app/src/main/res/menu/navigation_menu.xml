@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:id="@+id/addChores"
         android:icon="@drawable/ic_add_chores"
         android:title="Add Chores"/>
-    <item android:id="@+id/addShoppingCart"
-        android:icon="@drawable/ic_add_shopping_cart"
-        android:title="Add Shopping Cart"/>
     <item android:id="@+id/completedChores"
         android:icon="@drawable/ic_completed_chores"
         android:title="Completed Chores"/>
-
-
+    <item android:id="@+id/addShoppingCart"
+        android:icon="@drawable/ic_add_shopping_cart"
+        android:title="Add Shopping Cart"/>
+    <item android:id="@+id/viewShoppingCart"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="View Shopping Cart"/>
 </menu>

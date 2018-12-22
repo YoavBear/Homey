@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:backgroundTint="@color/colorAccent">
+
+    <LinearLayout
+        android:layout_width="296dp"
+        android:layout_height="147dp"
+        android:layout_weight="0.7"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:outlineProvider="bounds"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/eventRow_title"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:paddingLeft="4dp"
+            android:text="Title" />
+
+        <TextView
+            android:id="@+id/eventRow_description"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:paddingLeft="4dp"
+            android:text="decription" />
+
+        <TextView
+            android:id="@+id/eventRow_priority"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:paddingLeft="4dp"
+            android:text="Priority" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:background="#ffffff"
+        android:gravity="fill_vertical"
+        android:orientation="vertical">
+
+
+        <ImageButton
+            android:id="@+id/choreButton_completed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_done" />
+
+        <ImageButton
+            android:id="@+id/choreButton_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_edit" />
+
+        <ImageButton
+            android:id="@+id/choreButton_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_delete" />
+
+    </LinearLayout>
+</LinearLayout>
