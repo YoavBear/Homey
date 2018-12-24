@@ -137,6 +137,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
-        android:text="@string/submit_activity"
+        android:text="Submit Shopping List Item"
         android:visibility="visible" />
 </LinearLayout>
